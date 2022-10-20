@@ -1,5 +1,8 @@
 const fs = require('fs');
 const myConsole = new console.Console(fs.createWriteStream('./logs.txt'));
+const axios = require('axios');
+const e = require('express');
+const whatsappService = require('../services/whatsappService');
 
 const verifyToken = (req, res) => {
   try {
@@ -38,20 +41,9 @@ const recieveMessage = (req, res) => {
 
       myConsole.log(message);
 
-      axios({
-        method: 'POST', // Required, HTTP method, a string, e.g. POST, GET
-        url:
-          'https://graph.facebook.com/v12.0/' +
-          phone_number_id +
-          '/messages?access_token=' +
-          token,
-        data: {
-          messaging_product: 'whatsapp',
-          to: from,
-          text: { body: 'Ack: ' + msg_body },
-        },
-        headers: { 'Content-Type': 'application/json' },
-      });
+      let userMessage = getUserMessage(message);
+
+      whatsappService.sendWhatsappMessage(userMessage, from);
     }
     res.sendStatus(200);
   } else {
@@ -59,6 +51,28 @@ const recieveMessage = (req, res) => {
     res.sendStatus(404);
   }
 };
+
+function getUserMessage(message) {
+  let text = '';
+  let type = message['type'];
+
+  if (type === 'text') {
+    text = message['text']['body'];
+  } else if (type == 'interactive') {
+    let interactiveObj = message['interactive'];
+    let interactiveType = interactiveObj['type'];
+
+    if (interactiveType === 'button_reply') {
+      text = interactiveObj['button_reply']['title'];
+    } else if (interactiveType === 'list_reply') {
+      text = interactiveObj['list_reply']['title'];
+    }
+  } else {
+    text = 'Unsupported message type';
+  }
+
+  return text;
+}
 
 module.exports = {
   verifyToken,
