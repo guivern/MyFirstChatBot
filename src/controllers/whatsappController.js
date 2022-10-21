@@ -45,10 +45,10 @@ const recieveMessage = (req, res) => {
 
       whatsappService.sendWhatsappMessage(userMessage, from);
     }
-    res.send("Event Received");
+    res.send("EVENT_RECEIVED");
   } else {
     // Return a '404 Not Found' if event is not from a WhatsApp API
-    res.send("Event Received");
+    res.send("EVENT_RECEIVED");
   }
 };
 
