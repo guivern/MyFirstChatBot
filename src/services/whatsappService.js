@@ -6,19 +6,19 @@ function sendWhatsappMessage(message, msisdn) {
     to: msisdn,
     type: 'text',
     text: {
-      body: message,
+      body: `You said: ${message}`,
     },
   });
 
   const options = {
     host: 'graph.facebook.com',
-    path: '/v15.0/107626655472154/messages',
+    path: `/v15.0/${process.env.PHONE_NUMBER_ID}/messages`,
     method: 'POST',
     body: data,
     headers: {
       'Content-Type': 'application/json',
       Authorization:
-        'Bearer EAALk0c5xVrQBAHeKeGmdak8mYXGAZCIVROF16ZBbS1xyIndtJjNkvmBmbTQRUyt8toQnWFmSifuZAaEpfFAL1rg0EXwYDEXulmuvZC3ZCGZC9mUZCCDNMhCKZAZCjlHVX0b0e9fn2TPdTNRMEJaRzFWxKOfZAHaADkeLn6fNN8ZBmZAgmV5QUgc8sVDVUeiXHiEGKr0yh7VmQHRM5wZDZD',
+        `Bearer ${process.env.FACEBOOK_ACCESS_TOKEN}`,
     },
   };
 

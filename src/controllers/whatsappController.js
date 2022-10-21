@@ -41,6 +41,8 @@ const recieveMessage = (req, res) => {
 
       let userMessage = getUserMessage(message);
 
+      console.log(`Bearer ${process.env.FACEBOOK_ACCESS_TOKEN}`);
+
       console.log('recieveMessage: ', userMessage);
       console.log('msisdn: ', from);
 
