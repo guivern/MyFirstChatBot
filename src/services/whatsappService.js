@@ -12,11 +12,9 @@ function sendWhatsappMessage(message, msisdn) {
     },
   });
 
-  const phoneNumberId = process.env.PHONE_NUMBER_ID || '107626655472154';
-
   const options = {
     host: 'graph.facebook.com',
-    path: `v15.0/${phoneNumberId}/messages`,
+    path: 'v13.0/107626655472154/messages',
     method: 'POST',
     body: data,
     headers: {

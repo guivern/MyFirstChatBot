@@ -1,5 +1,5 @@
 const fs = require('fs');
-const myConsole = new console.Console(fs.createWriteStream('./logs.txt'));
+// const myConsole = new console.Console(fs.createWriteStream('./logs.txt'));
 const whatsappService = require('../services/whatsappService');
 
 const verifyToken = (req, res) => {
@@ -37,16 +37,18 @@ const recieveMessage = (req, res) => {
       let from = message.from; // extract the phone number from the webhook payload
       let msg_body = message.text.body; // extract the message text from the webhook payload
 
-      myConsole.log(message);
+      // myConsole.log(message);
 
       let userMessage = getUserMessage(message);
 
+      console.log('recieveMessage: ', userMessage);
+
       whatsappService.sendWhatsappMessage(userMessage, from);
     }
-    res.sendStatus(200);
+    res.send("Event Received");
   } else {
     // Return a '404 Not Found' if event is not from a WhatsApp API
-    res.sendStatus(404);
+    res.send("Event Received");
   }
 };
 
