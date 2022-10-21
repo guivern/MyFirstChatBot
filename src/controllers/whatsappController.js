@@ -4,13 +4,13 @@ const whatsappService = require('../services/whatsappService');
 
 const verifyToken = (req, res) => {
   try {
-    var accessToken = 'AKJ55ADSA6S1JLMN6QWASDC6Q';
+    var fbIntegrationToken = process.env.FACEBOOK_INTEGRATION_TOKEN;
     var token = req.query['hub.verify_token'];
     var challenge = req.query['hub.challenge'];
 
     console.log('verifyToken: ', token, challenge);
 
-    if (token === accessToken) {
+    if (token === fbIntegrationToken) {
       res.send(challenge);
     } else {
       res.status(400).send();
