@@ -42,6 +42,7 @@ const recieveMessage = (req, res) => {
       let userMessage = getUserMessage(message);
 
       console.log('recieveMessage: ', userMessage);
+      console.log('msisdn: ', from);
 
       whatsappService.sendWhatsappMessage(userMessage, from);
     }

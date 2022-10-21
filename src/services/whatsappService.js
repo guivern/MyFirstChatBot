@@ -3,18 +3,16 @@ const https = require('https');
 function sendWhatsappMessage(message, msisdn) {
   const data = JSON.stringify({
     messaging_product: 'whatsapp',
-    recipient_type: 'individual',
     to: msisdn,
     type: 'text',
     text: {
-      preview_url: false,
       body: message,
     },
   });
 
   const options = {
     host: 'graph.facebook.com',
-    path: 'v13.0/107626655472154/messages',
+    path: '/v15.0/107626655472154/messages',
     method: 'POST',
     body: data,
     headers: {
