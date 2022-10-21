@@ -1,4 +1,4 @@
-function buildSimpleTextMessage(msisdn, message) {
+function buildTextMessage(msisdn, message) {
   return JSON.stringify({
     messaging_product: 'whatsapp',
     to: msisdn,
@@ -20,7 +20,7 @@ function buildImageMessage(msisdn, imageUrl) {
   });
 }
 
-function buildImageMessage(msisdn, audioUrl) {
+function buildAudioMessage(msisdn, audioUrl) {
   return JSON.stringify({
     messaging_product: 'whatsapp',
     to: msisdn,
@@ -67,7 +67,7 @@ function buildLocationMessage(msisdn, latitude, longitude, name, address) {
   });
 }
 
-function buildButtonMessage(msisdn, header, body, buttons) {
+function buildButtonMessage(msisdn, header, body, footer, buttons) {
   return JSON.stringify({
     messaging_product: 'whatsapp',
     to: msisdn,
@@ -81,26 +81,8 @@ function buildButtonMessage(msisdn, header, body, buttons) {
       body: {
         text: body,
       },
-      action: {
-        buttons: buttons,
-      },
-    },
-  });
-}
-
-function buildButtonMessage(msisdn, header, body, buttons) {
-  return JSON.stringify({
-    messaging_product: 'whatsapp',
-    to: msisdn,
-    type: 'interactive',
-    interactive: {
-      type: 'button',
-      header: {
-        type: 'text',
-        text: header,
-      },
-      body: {
-        text: body,
+      footer: {
+        text: footer,
       },
       action: {
         buttons: buttons,
@@ -160,7 +142,7 @@ function getListSection(title, rows) {
 }
 
 module.exports = {
-  buildSimpleTextMessage,
+  buildTextMessage,
   buildImageMessage,
   buildAudioMessage,
   buildVideoMessage,
